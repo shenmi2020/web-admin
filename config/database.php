@@ -28,7 +28,7 @@ return [
             'unix_socket' => '',
             'charset'     => 'utf8',
             'collation'   => 'utf8_unicode_ci',
-            'prefix'      => 'wx_',
+            'prefix'      => '',
             'strict'      => true,
             'engine'      => null,
         ],
