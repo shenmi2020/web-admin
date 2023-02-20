@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c64b6a59d6fc527506d4cafdcff2025b",
+    "content-hash": "063e3048545d852a332edffb751f1e11",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -3056,16 +3056,16 @@
         },
         {
             "name": "tinywan/jwt",
-            "version": "v1.3.1",
+            "version": "v1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Tinywan/webman-jwt.git",
-                "reference": "f916b004c08bf0ad242c34ad5eb06be932d2b614"
+                "reference": "25bd23d71e40d152e9da86084ac40c2db3868d36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Tinywan/webman-jwt/zipball/f916b004c08bf0ad242c34ad5eb06be932d2b614",
-                "reference": "f916b004c08bf0ad242c34ad5eb06be932d2b614",
+                "url": "https://api.github.com/repos/Tinywan/webman-jwt/zipball/25bd23d71e40d152e9da86084ac40c2db3868d36",
+                "reference": "25bd23d71e40d152e9da86084ac40c2db3868d36",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3103,9 +3103,122 @@
             "description": "JSON Web Token (JWT) for webman plugin",
             "support": {
                 "issues": "https://github.com/Tinywan/webman-jwt/issues",
-                "source": "https://github.com/Tinywan/webman-jwt/tree/v1.3.1"
+                "source": "https://github.com/Tinywan/webman-jwt/tree/v1.5.1"
             },
-            "time": "2022-08-03T11:46:32+00:00"
+            "time": "2022-11-03T01:37:53+00:00"
+        },
+        {
+            "name": "topthink/think-helper",
+            "version": "v3.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-helper.git",
+                "reference": "769acbe50a4274327162f9c68ec2e89a38eb2aff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/top-think/think-helper/zipball/769acbe50a4274327162f9c68ec2e89a38eb2aff",
+                "reference": "769acbe50a4274327162f9c68ec2e89a38eb2aff",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helper.php"
+                ],
+                "psr-4": {
+                    "think\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "yunwuxin",
+                    "email": "448901948@qq.com"
+                }
+            ],
+            "description": "The ThinkPHP6 Helper Package",
+            "support": {
+                "issues": "https://github.com/top-think/think-helper/issues",
+                "source": "https://github.com/top-think/think-helper/tree/v3.1.6"
+            },
+            "time": "2021-12-15T04:27:55+00:00"
+        },
+        {
+            "name": "topthink/think-orm",
+            "version": "v2.0.54",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-orm.git",
+                "reference": "97b061b47616301ff29fbd4c35ed9184e1162e4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/97b061b47616301ff29fbd4c35ed9184e1162e4e",
+                "reference": "97b061b47616301ff29fbd4c35ed9184e1162e4e",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-pdo": "*",
+                "php": ">=7.1.0",
+                "psr/log": "^1.0|^2.0",
+                "psr/simple-cache": "^1.0|^2.0",
+                "topthink/think-helper": "^3.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7|^8|^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "stubs/load_stubs.php"
+                ],
+                "psr-4": {
+                    "think\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "liu21st",
+                    "email": "liu21st@gmail.com"
+                }
+            ],
+            "description": "think orm",
+            "keywords": [
+                "database",
+                "orm"
+            ],
+            "support": {
+                "issues": "https://github.com/top-think/think-orm/issues",
+                "source": "https://github.com/top-think/think-orm/tree/v2.0.54"
+            },
+            "time": "2022-07-05T05:25:51+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -3333,6 +3446,83 @@
             "time": "2022-09-19T01:49:25+00:00"
         },
         {
+            "name": "webman/redis-queue",
+            "version": "v1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webman-php/redis-queue.git",
+                "reference": "81667bf9ab3c1256e2c2f61b9d41d53791b8b34b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webman-php/redis-queue/zipball/81667bf9ab3c1256e2c2f61b9d41d53791b8b34b",
+                "reference": "81667bf9ab3c1256e2c2f61b9d41d53791b8b34b",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "workerman/redis-queue": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Webman\\RedisQueue\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Redis message queue plugin for webman.",
+            "support": {
+                "issues": "https://github.com/webman-php/redis-queue/issues",
+                "source": "https://github.com/webman-php/redis-queue/tree/v1.2.4"
+            },
+            "time": "2022-06-27T08:07:13+00:00"
+        },
+        {
+            "name": "webman/think-orm",
+            "version": "v1.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webman-php/think-orm.git",
+                "reference": "060fa6211ac0812dcb302578fb9875fc6576c9d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webman-php/think-orm/zipball/060fa6211ac0812dcb302578fb9875fc6576c9d6",
+                "reference": "060fa6211ac0812dcb302578fb9875fc6576c9d6",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "topthink/think-orm": "^2.0.53",
+                "workerman/webman-framework": "^1.2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Webman\\ThinkOrm\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "support": {
+                "issues": "https://github.com/webman-php/think-orm/issues",
+                "source": "https://github.com/webman-php/think-orm/tree/v1.0.10"
+            },
+            "time": "2022-10-14T11:01:08+00:00"
+        },
+        {
             "name": "workerman/crontab",
             "version": "v1.0.4",
             "source": {
@@ -3389,17 +3579,101 @@
             "time": "2022-08-01T10:24:22+00:00"
         },
         {
-            "name": "workerman/webman-framework",
-            "version": "v1.4.6",
+            "name": "workerman/redis",
+            "version": "v1.0.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/walkor/webman-framework.git",
-                "reference": "c638812bf4e74e877c2b198a803aec4df0263986"
+                "url": "https://github.com/walkor/redis.git",
+                "reference": "14f77108d3498fbc84cd8b10cb48c18f09661458"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/webman-framework/zipball/c638812bf4e74e877c2b198a803aec4df0263986",
-                "reference": "c638812bf4e74e877c2b198a803aec4df0263986",
+                "url": "https://api.github.com/repos/walkor/redis/zipball/14f77108d3498fbc84cd8b10cb48c18f09661458",
+                "reference": "14f77108d3498fbc84cd8b10cb48c18f09661458",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.4",
+                "workerman/workerman": ">=4.0.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Workerman\\Redis\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "homepage": "http://www.workerman.net",
+            "support": {
+                "issues": "https://github.com/walkor/redis/issues",
+                "source": "https://github.com/walkor/redis/tree/v1.0.11"
+            },
+            "time": "2022-06-13T07:14:28+00:00"
+        },
+        {
+            "name": "workerman/redis-queue",
+            "version": "v1.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/walkor/redis-queue.git",
+                "reference": "b8286b4086a852fd588a98453f3dc7ed63bd79fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/walkor/redis-queue/zipball/b8286b4086a852fd588a98453f3dc7ed63bd79fe",
+                "reference": "b8286b4086a852fd588a98453f3dc7ed63bd79fe",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.4",
+                "workerman/redis": "^1.0",
+                "workerman/workerman": "^4.0.20"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Workerman\\RedisQueue\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Message queue system written in PHP based on workerman and backed by Redis.",
+            "homepage": "http://www.workerman.net",
+            "support": {
+                "issues": "https://github.com/walkor/redis-queue/issues",
+                "source": "https://github.com/walkor/redis-queue/tree/v1.0.10"
+            },
+            "time": "2022-09-06T04:07:25+00:00"
+        },
+        {
+            "name": "workerman/webman-framework",
+            "version": "v1.4.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/walkor/webman-framework.git",
+                "reference": "e9815557f08dffd3a41b54f709a98619aab84f16"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/walkor/webman-framework/zipball/e9815557f08dffd3a41b54f709a98619aab84f16",
+                "reference": "e9815557f08dffd3a41b54f709a98619aab84f16",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3463,20 +3737,20 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-09-19T02:00:40+00:00"
+            "time": "2022-09-19T08:03:06+00:00"
         },
         {
             "name": "workerman/workerman",
-            "version": "v4.0.42",
+            "version": "v4.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/walkor/workerman.git",
-                "reference": "83f09b50eaf7412504604030daa9e1f9c767e6c3"
+                "reference": "83e007acf936e2233ac92d7368b87716f2bae338"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/workerman/zipball/83f09b50eaf7412504604030daa9e1f9c767e6c3",
-                "reference": "83f09b50eaf7412504604030daa9e1f9c767e6c3",
+                "url": "https://api.github.com/repos/walkor/workerman/zipball/83e007acf936e2233ac92d7368b87716f2bae338",
+                "reference": "83e007acf936e2233ac92d7368b87716f2bae338",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3486,7 +3760,7 @@
                 ]
             },
             "require": {
-                "php": ">=5.4"
+                "php": ">=7.0"
             },
             "suggest": {
                 "ext-event": "For better performance. "
@@ -3532,7 +3806,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-07-29T09:06:29+00:00"
+            "time": "2022-10-09T11:33:14+00:00"
         }
     ],
     "packages-dev": [],

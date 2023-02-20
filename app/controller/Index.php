@@ -3,15 +3,21 @@
 namespace app\controller;
 
 use support\Request;
-use support\Db;
+// use support\Db;
 use app\model\School;
 use support\Redis;
+use think\facade\Db;
+use Tinywan\Jwt\JwtToken;
 
 class Index extends Base
 {
     
     public function index(Request $request)
     {
+
+        // $data = Db::table('wx_user')->select();
+        // var_dump($data);
+
         $start_time = microtime(true) * 1000000;
         $start_memory = memory_get_usage();
         // $data = Db::table('person')->get();
@@ -157,4 +163,18 @@ class Index extends Base
         return json(['code' => 0, 'msg' => array_values($num_arr)]);
     }
 
+    public function test3()
+    {
+        $uid = JwtToken::getCurrentId();
+        $data = JwtToken::getExtend();
+        $data = JwtToken::getTokenExp();
+        // $data = JwtToken::refreshToken();
+
+        return json([
+            'code' => 0,
+            'data' => $data
+        ]);
+    }
+
+    
 }

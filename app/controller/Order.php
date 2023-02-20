@@ -3,36 +3,91 @@
 namespace app\controller;
 
 use support\Request;
-use app\model\Shop as ShopModel;
 use support\Db;
 
-class Shop extends Base
+class Order extends Base
 {
+
     public $iv = 'AED7966C958C149632180F51EDBC9313';
     public $weixiao_private = '30820278020100300D06092A864886F70D0101010500048202623082025E02010002818100DDC2754B64A6B16A41601BEB7F40699922F2A22CB73741C0589475FA984BC08E6075DEB733F1EDC71DD15AEC28898EF32E13BB6BD6AEFE9F5F78D556C258F09C58EB932005449263A97F11569156A41DE0178E6A2F80F9CF4D82B7C0749B4658D27EB63F304F9186DEDA0F08C724424A19908C800019921FFE793B813AD39AAD02030100010281803837A1D09915810874C64E8DA6D6C76E60E3ADA5345537BFF134C1ABE38BE0A6B7616A327B62AB6ABCEE63E4566A78E8C117937DC510DBCFBF3E3CA71FE1B82D11B0EC968E6E7A233BC6FDD49768C5694696404C0268BAF5A1D5F833876D47AE87C052F9895AF448A755CC66E20972B9C8E1DB4A6C93BD88C88AC29CD2C6A2A9024100F343FDC66BF142A32114453DE897F65D930E6CC6ECF9DED8B286CC4C196FC4D90626810D08B5F1DB0FEC1EB37E00238EF4ACB3F2015174B44CAAF35C69C7263F024100E95E43B9064F83210DE2406071CEA9090F8FF19EC7CD319BC63A1BD09145D66F51D51192BB35320767489B8B456053513B158557E9AB546BF09E5FB1D8AB3C13024100A741E4467D09108C20BE532D51B2CA0D6482D27FA387D9949C8ADA04A8A8946BB332DE201C111D0D45514F7A91F37E7F57F33675FA3A0B47BC3EFDBC586E38F9024100DBE966AC2F14329FAD73ADF2B48C68A20F36381CC66FC8F5E060D5E13F64AE640C9B5A8A093C61BEB447A9BC1E4E5D7548D648E7C55D1C9AF30E6B632EA87E5D024100D5F9A5CB89621A68B5DF4D262D99907914AD7DAF31C72FBC822A998DEEE63A5A6A14C67A7A2E70BCCBEAE7E077479B4FD264B769E90F69C41B01A54710030D23';
 
-
-    /**
-     * 
-     */
-    public function test2()
+    public function test()
     {
-        exec('php webman order:check', $info);
-        var_dump($info);
-        echo 111;
+        $this->fetch(10003, '2023-02-16');
     }
 
-
-    /**
-     * 列表
-     */
-    public function index(Request $request)
+    // 拉取云平台账单
+    public function fetch($school_id = 10003, $date = '2023-02-16')
     {
-        // 对账日期
-        $date = '2023-02-16';
-        $formart_date = date('Ymd', strtotime($date));
-        $file = 'public/dz' . $formart_date . '0001600034430.txt';
+      
+        $school_info = Db::table('charge_school')->where('school_id', $school_id)->first();
+        if (empty($school_info)) {
+            $this->log('学校id不存在:' . $school_id, 'school_id:' . $school_id . '|日期:' . $date);
+            return;
+        }
+        $url = 'https://weixiao.dmlinker.com/wechat/charge.user/bankOrder';
+        $req_param = [
+            'school_id' => $school_id,
+            'date' => $date
+        ];
+        $result = $this->curl_get($url, $req_param);
+        $result = json_decode($result, true);
+        if (empty($result) || empty($result['code'])) {
+            $this->log($date . $school_info->name . '云平台账单拉取异常', $result['msg'] ?? '');
+            return;
+        }
+        // 删除平台旧账单
+        Db::table('charge_order')->where('school_id', $school_id)->where('check_date', $date)->where('delete_time', NULL)->update([
+            'delete_time' => date('Y-m-d H:i:s')
+        ]);
+        $data = [];
+        foreach ($result['data'] as $val) {
+            $data[] = [
+                'order_id' => $val['order_id'],
+                'pay_money' => $val['pay'],
+                'status' => 4,
+                'order_no' => $val['order_no'],
+                'acq_trace' => $val['bank_number'],
+                'user_name' => $val['student_name'],
+                'card_number' => $val['card_number'],
+                'school_id' => $school_id,
+                'pay_time' => $val['create_time'],
+                'check_date' => $date
+            ];
+        }
+        Db::table('charge_order')->insert($data);
+        $this->log($date . $school_info->name . '云平台账单拉取完成');
+    }
     
+    /**
+     * 对账
+     * 对账文件格式说明
+        0: "2023021617421667667597 "
+        1: " G20210005 "
+        2: " 赵海潇 "
+        3: "  "
+        4: " 0.00 "
+        5: " 0.00 "
+        6: " 0.01 "
+        7: "  "
+        8: " 商品收费:0.01元 "
+        9: "  "
+        10: " 00480001 "
+        11: "    "
+        12: " 17:51:45 "
+        13: " "
+     */
+    public function check($school_id = 10003, $date = '2023-02-16')
+    {
+        $school_info = Db::table('charge_school')->where('school_id', $school_id)->first();
+        if (empty($school_info)) {
+            $this->log('学校id不存在:' . $school_id, 'school_id:' . $school_id . '|日期:' . $date);
+            return;
+        }
+        // 对账日期
+        $formart_date = date('Ymd', strtotime($date));
+        $file = 'public/dz' . $formart_date . '00016000' . $school_info->merchid . '.txt';
+        
         if (file_exists($file)) {
             $fp = fopen($file, 'r');
             if (empty(filesize($file))) {
@@ -52,12 +107,17 @@ class Shop extends Base
                 if (substr_count($val, '|') != 13) {
                     continue;
                 }
-            
                 $data[] = explode('|', $val);
             }
             // 处理账单
             foreach ($data as $val) {
-                $order_info = Db::table('charge_order')->where('delete_time', NULL)->where('status', '<>', 3)->where('acq_trace', trim($val[0]))->first();
+                $order_info = Db::table('charge_order')
+                    ->where('school_id', $school_id)
+                    ->where('check_date', $date)
+                    ->where('delete_time', NULL)
+                    ->where('status', '<>', 3)
+                    ->where('acq_trace', trim($val[0]))
+                    ->first();
                 if (empty($order_info)) {
                     // 云平台缺少订单
                     Db::table('charge_order')->insert([
@@ -65,13 +125,13 @@ class Shop extends Base
                         'status' => 3,
                         'acq_trace' => $val[0],
                         'card_number' => trim($val[1]),
-                        'school_id' => 10003,
+                        'school_id' => $school_id,
                         'create_time' => date('Y-m-d H:i:s'),
                         'check_date' => $date
                     ]);
                 } else {
                     // 比对账单金额
-                    if ($order_info['pay_money'] == $val[6]) {
+                    if ($order_info->pay_money == $val[6]) {
                         // 正常
                         $status = 2;
                     } else {
@@ -85,39 +145,52 @@ class Shop extends Base
                     ]);
                 }
             }
-            
-            return $this->success($data);
+            $this->log($date . $school_info->name . '对账完成');
+        } else {
+            // 对账文件不存在
+            $this->log($date . $school_info->name . '对账文件不存在');
         }
     }
 
     /**
-     * 对账文件格式说明
-     
-        0: "2023021617421667667597 "
-        1: " G20210005 "
-        2: " 赵海潇 "
-        3: "  "
-        4: " 0.00 "
-        5: " 0.00 "
-        6: " 0.01 "
-        7: "  "
-        8: " 商品收费:0.01元 "
-        9: "  "
-        10: " 00480001 "
-        11: "    "
-        12: " 17:51:45 "
-        13: " "
-
+     * 重新对账
      */
-
-    public function test($content)
+    public function recheck(Request $request)
     {
-        
-        $bank_key = '30820122300D06092A864886F70D01010105000382010F003082010A0282010100AE4925DA938E15AE296DA3F02380E83DEAF6D86448FDC062E7FE8F17057792B18FF138632936845711D6893A5E9D026B5E75A4BD716E0528711D8375982EDDBD0DCD14C2A8D0AB14BD20EE9D14A17E0C0564B2F8C9BC25C64DDE62A307E7346DE3CCF634FE4B2C2FCDAA959848B1853F255979AB553C237EDEB66AD06668885367CED2893DDA19C67C3CFAAE68DDE7E149C9ABC75E133AE5BDE072DE506117D6DD13D69A3FD0BEC972F7C41E9F34DEB122FF9FC3F4B777BA6CC66CD5FC0CB35DD5866D3DF1D8B95966BB756212B6423F950C10DF3418FD1AE1A5E74515C36CA12CBF974B044B340A7F37CE8886BAACBC0B137F383645D04E65832BA0077D88050203010001';
-        $bank_key = base64_encode(hex2bin($bank_key));
-        // $iv = 'AED7966C958C149632180F51EDBC9313';        
+        $param = $request->all();
 
-        return $this->success($this->iv);
+        return $this->success($param);
+    }
+
+
+    /**
+     * 请求方法
+     */
+    public function curl_get($url, $params = array(), $timeout = 50)
+    {
+        $url = "{$url}?" . http_build_query ( $params );
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'GET' );
+        curl_setopt ( $ch, CURLOPT_TIMEOUT, 60 );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $params );
+        $result = curl_exec ( $ch );
+        curl_close ( $ch );
+
+        return $result;
+    }
+
+    /**
+     * 日志
+     */
+    public function log($title = '', $content = '')
+    {
+        Db::table('charge_log')->insert([
+            'title' => $title,
+            'content' => $content,
+            'create_time' => date('Y-m-d H:i:s')
+        ]);
     }
 
     public function deRsaSign($cipherText, $skey)
@@ -226,5 +299,4 @@ uyR4ue9K5cI7LTpvKkv73p0=
 
         return $result;
     }
-
 }

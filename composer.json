@@ -30,12 +30,14 @@
     "vlucas/phpdotenv": "^5.4",
     "psr/container": "^1.1.1",
     "illuminate/database": "^8.83",
-    "tinywan/jwt": "^1.3",
+    "tinywan/jwt": "^1.5.0",
     "webman/console": "^1.2",
     "phpoffice/phpspreadsheet": "^1.25",
     "illuminate/redis": "^8.83",
     "illuminate/events": "^8.83",
-    "workerman/crontab": "^1.0"
+    "workerman/crontab": "^1.0",
+    "webman/think-orm": "^1.0",
+    "webman/redis-queue": "^1.2"
   },
   "suggest": {
     "ext-event": "For better performance. "

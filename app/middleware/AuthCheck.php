@@ -16,12 +16,14 @@ class AuthCheck implements MiddlewareInterface
         //     return redirect('/user/login');
         // }
         // 请求继续向洋葱芯穿越
-        
+      
+        if ($request->controller == \app\controller\User::class) {
+            return $handler($request);
+        }
         try {
             $request->user = \Tinywan\Jwt\JwtToken::getExtend();
             return $handler($request);
         } catch (\Tinywan\Jwt\Exception\JwtTokenException $exception) {
-            
             return json(['code' => 401, 'message' => '身份验证失败']);
         }
 

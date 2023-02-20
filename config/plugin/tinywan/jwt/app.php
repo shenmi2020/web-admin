@@ -8,13 +8,13 @@ return [
         // access令牌秘钥
         'access_secret_key' => '20220921d3d3LmJq',
         // access令牌过期时间，单位：秒。默认 2 小时
-        'access_exp' => 86400,
+        'access_exp' => 604800,
         // refresh令牌秘钥
         'refresh_secret_key' => '20220921KTxigxc9o50c',
         // refresh令牌过期时间，单位：秒。默认 7 天
         'refresh_exp' => 604800,
         // refresh 令牌是否禁用，默认不禁用 false
-        'refresh_disable' => true,
+        'refresh_disable' => false,
         // 令牌签发者
         'iss' => 'webman.tinywan.cn',
         // 时钟偏差冗余时间，单位秒。建议这个余地应该不大于几分钟。
